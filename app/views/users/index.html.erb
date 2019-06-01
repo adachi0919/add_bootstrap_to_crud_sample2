@@ -1,4 +1,32 @@
 <%= link_to "投稿画面へ", new_user_path %>
+
+<!-- フィルタリングを行うための検索窓 -->
+<input class="form-control" id="myInput" type="text" placeholder="Search Curriculum..">
+
+<!-- テーブル -->
+<table class="table table-striped">
+  <thead class="bg-danger text-white">
+    <tr>
+      <th>言語</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody id="myTable">
+    <tr>
+      <td>HTML/CSS</td>
+      <td>Webサイトの画面を作るための言語</td>
+    </tr>
+    <tr>
+      <td>Ruby</td>
+      <td>Webサイトの裏側の処理をする言語</td>
+    </tr>
+    <tr>
+      <td>Python</td>
+      <td>人工知能を開発するための言語</td>
+    </tr>
+  </tbody>
+</table>
+
 <% @users.each do |user| %>
   <p>
     <!-- 以下の2行のコードを追加 -->
@@ -8,3 +36,14 @@
     <%= link_to "編集", edit_user_path(user), method: :get %>
   </p>
 <% end %>
+
+<script>
+  $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>
